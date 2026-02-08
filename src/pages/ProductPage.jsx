@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useContext } from 'react'
 import { useParams, Link } from 'react-router-dom'
-import axios from '../api/axios'
+import axios, { BASE_URL } from '../api/axios'
 import { CartContext } from '../context/CartContext'
 
 export default function ProductPage() {
@@ -73,7 +73,7 @@ export default function ProductPage() {
                             style={{ cursor: 'pointer', overflow: 'hidden', borderRadius: '8px' }}
                         >
                             <img
-                                src={product.image}
+                                src={product.image?.startsWith('http') ? product.image : `${BASE_URL}${product.image}`}
                                 alt={product.name}
                                 style={{
                                     maxWidth: '100%',
@@ -149,7 +149,7 @@ export default function ProductPage() {
                                     }}
                                 >
                                     <img
-                                        src={p.image}
+                                        src={p.image?.startsWith('http') ? p.image : `${BASE_URL}${p.image}`}
                                         alt={p.name}
                                         style={{
                                             width: '70px',
@@ -198,7 +198,7 @@ export default function ProductPage() {
                         }
                     `}</style>
                     <img
-                        src={product.image}
+                        src={product.image?.startsWith('http') ? product.image : `${BASE_URL}${product.image}`}
                         alt={product.name}
                         style={{
                             maxWidth: '90%',

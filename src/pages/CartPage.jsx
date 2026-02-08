@@ -1,7 +1,7 @@
 import React, { useContext, useState } from 'react';
 import { CartContext } from '../context/CartContext';
 import { Link } from 'react-router-dom';
-import axios from '../api/axios'
+import axios, { BASE_URL } from '../api/axios'
 import { toast } from 'react-toastify';
 
 export default function CartPage() {
@@ -118,7 +118,7 @@ export default function CartPage() {
                                     {/* Photo */}
                                     <td style={tdStyle}>
                                         <img
-                                            src={item.image}
+                                            src={item.image?.startsWith('http') ? item.image : `${BASE_URL}${item.image}`}
                                             alt={item.name}
                                             style={{ width: '70px', height: '90px', objectFit: 'contain' }}
                                             onError={(e) => { e.target.src = 'https://via.placeholder.com/70x90?text=No+Image'; }}

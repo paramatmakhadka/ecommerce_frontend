@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
-import axios from '../api/axios'
+import axios, { BASE_URL } from '../api/axios'
 import { AuthContext } from '../context/AuthContext'
 import { toast } from 'react-toastify'
 
@@ -192,7 +192,7 @@ export default function AdminProductForm() {
                                         <div className="mt-3">
                                             <div className="small text-muted mb-2 text-truncate">Path: {form.image}</div>
                                             <img
-                                                src={form.image}
+                                                src={form.image?.startsWith('http') ? form.image : `${BASE_URL}${form.image}`}
                                                 alt="Preview"
                                                 className="rounded shadow-sm border"
                                                 style={{ height: '100px', width: 'auto' }}

@@ -1,9 +1,9 @@
 import axios from 'axios';
 
-const API_URL = import.meta.env.VITE_API_URL || '';
+export const BASE_URL = import.meta.env.VITE_API_URL || 'https://ecommerce-backend-jpgi.onrender.com';
 
 const instance = axios.create({
-    baseURL: API_URL,
+    baseURL: BASE_URL,
     withCredentials: true,
 });
 

@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
+import { BASE_URL } from '../api/axios'
 
 export default function ProductCard({ product, addToCart }) {
     const [hover, setHover] = useState(false)
@@ -28,7 +29,7 @@ export default function ProductCard({ product, addToCart }) {
                 }}
             >
                 <img
-                    src={product.image}
+                    src={product.image?.startsWith('http') ? product.image : `${BASE_URL}${product.image}`}
                     alt={product.name}
                     style={{
                         height: '220px',
