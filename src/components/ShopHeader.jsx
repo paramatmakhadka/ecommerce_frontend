@@ -11,6 +11,7 @@ export default function ShopHeader() {
 
     const [categories, setCategories] = useState([])
     const [keyword, setKeyword] = useState('')
+    const [menuOpen, setMenuOpen] = useState(false) // For hamburger toggle
 
     useEffect(() => {
         const fetchCategories = async () => {
@@ -52,7 +53,7 @@ export default function ShopHeader() {
                     </Link>
 
                     {/* Search */}
-                    <form onSubmit={handleSearch} className="d-flex w-50 mx-4">
+                    <form onSubmit={handleSearch} className="d-none d-md-flex w-50 mx-4">
                         <input
                             className="form-control rounded-0"
                             type="search"
@@ -73,7 +74,7 @@ export default function ShopHeader() {
                             </Link>
                         ) : (
                             <>
-                                <span className="small">Hello, {user.name}</span>
+                                <span className="small d-none d-md-inline">Hello, {user.name}</span>
 
                                 {user.isAdmin && (
                                     <Link to="/admin" className="btn btn-outline-secondary btn-sm">
@@ -104,20 +105,40 @@ export default function ShopHeader() {
                                 )}
                             </Link>
                         )}
+
+                        {/* Hamburger button for mobile */}
+                        <button
+                            className="btn btn-outline-dark d-md-none"
+                            onClick={() => setMenuOpen(!menuOpen)}
+                        >
+                            <i className="bi bi-list fs-4"></i>
+                        </button>
                     </div>
                 </div>
+
+                {/* Mobile search */}
+                <form onSubmit={handleSearch} className="d-md-none px-3 pb-2">
+                    <input
+                        className="form-control rounded-0"
+                        type="search"
+                        placeholder="Search products..."
+                        value={keyword}
+                        onChange={(e) => setKeyword(e.target.value)}
+                    />
+                </form>
             </div>
 
             {/* ===== CATEGORY NAVBAR ===== */}
             <nav className="navbar navbar-dark bg-dark">
                 <div className="container">
-                    <ul className="navbar-nav flex-row justify-content-center w-100 gap-4 overflow-auto">
+
+                    {/* Desktop categories */}
+                    <ul className="navbar-nav flex-row justify-content-center w-100 gap-4 overflow-auto d-none d-md-flex">
                         <li className="nav-item">
                             <Link className="nav-link" to="/">
                                 All
                             </Link>
                         </li>
-
                         {categories.map((c) => (
                             <li key={c._id} className="nav-item">
                                 <Link
@@ -129,6 +150,28 @@ export default function ShopHeader() {
                             </li>
                         ))}
                     </ul>
+
+                    {/* Mobile categories (hamburger) */}
+                    {menuOpen && (
+                        <ul className="navbar-nav flex-column d-md-none bg-dark p-3 w-100">
+                            <li className="nav-item mb-2">
+                                <Link className="nav-link text-white" to="/" onClick={() => setMenuOpen(false)}>
+                                    All
+                                </Link>
+                            </li>
+                            {categories.map((c) => (
+                                <li key={c._id} className="nav-item mb-2">
+                                    <Link
+                                        className="nav-link text-white"
+                                        to={`/category/${encodeURIComponent(c.name)}`}
+                                        onClick={() => setMenuOpen(false)}
+                                    >
+                                        {c.name}
+                                    </Link>
+                                </li>
+                            ))}
+                        </ul>
+                    )}
                 </div>
             </nav>
         </>
