@@ -20,7 +20,7 @@ export default function LoginPage() {
     }
 
     return (
-        <div className="container mt-5" style={{ maxWidth: '420px' }}>
+        <div className="container mt-5 mb-5" style={{ maxWidth: '420px' }}>
             <h3 className="mb-4 text-center">Login</h3>
 
             {error && (
@@ -77,8 +77,6 @@ export default function LoginPage() {
                     Login
                 </button>
             </form>
-
-
         </div>
     )
 }
