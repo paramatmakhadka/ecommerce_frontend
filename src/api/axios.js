@@ -1,10 +1,23 @@
-import axios from 'axios';
+import axios from "axios";
 
-export const BASE_URL = import.meta.env.VITE_API_URL || 'https://ecommerce-backend-jpgi.onrender.com';
+/**
+ * IMPORTANT:
+ * BASE_URL must NEVER end with a slash
+ * This prevents //uploads/... ORB errors
+ */
+export const BASE_URL =
+	import.meta.env.VITE_API_BASE_URL?.replace(/\/$/, "") ||
+	"https://ecommerce-backend-1-1ic5.onrender.com";
 
-const instance = axios.create({
-    baseURL: BASE_URL,
-    withCredentials: true,
+/**
+ * Axios instance for API calls
+ */
+const api = axios.create({
+	baseURL: BASE_URL,
+	withCredentials: true,
+	headers: {
+		"Content-Type": "application/json",
+	},
 });
 
-export default instance;
+export default api;
