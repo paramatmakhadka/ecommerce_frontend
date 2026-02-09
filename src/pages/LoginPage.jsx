@@ -70,9 +70,6 @@ export default function LoginPage() {
                         className="form-check-input"
                         id="rememberMe"
                     />
-                    <label className="form-check-label" htmlFor="rememberMe">
-                        Remember me
-                    </label>
                 </div>
 
                 {/* Submit */}
@@ -81,9 +78,7 @@ export default function LoginPage() {
                 </button>
             </form>
 
-            <div className="text-center mt-3">
-                New user? <Link to="/register">Register</Link>
-            </div>
+
         </div>
     )
 }
