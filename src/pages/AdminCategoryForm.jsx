@@ -13,7 +13,7 @@ export default function AdminCategoryForm() {
         if (isEdit) {
             const fetchCategory = async () => {
                 try {
-                    const { data } = await axios.get(`https://ecommerce-backend-jpgi.onrender.com/api/categories/${id}`)
+                    const { data } = await axios.get(`https://ecommerce-backend-1-1ic5.onrender.com/api/categories/${id}`)
                     setName(data.name)
                 } catch (err) {
                     console.error(err)

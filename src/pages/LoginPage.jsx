@@ -13,7 +13,7 @@ export default function LoginPage() {
         e.preventDefault()
         try {
             await login(email, password)
-            navigate('/')
+            navigate('/admin')
         } catch (err) {
             setError(err.response?.data?.message || err.message || 'Login failed')
         }
