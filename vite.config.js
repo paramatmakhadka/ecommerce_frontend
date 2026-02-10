@@ -7,11 +7,11 @@ export default defineConfig({
 		port: 3000,
 		proxy: {
 			"/api": {
-				target: "https://ecommerce-backend-jpgi.onrender.com",
+				target: "https://ecommerce-backend-jpgi.onrender.com" || "http://localhost:5000",
 				changeOrigin: true,
 			},
 			"/uploads": {
-				target: "https://ecommerce-backend-jpgi.onrender.com",
+				target: "https://ecommerce-backend-jpgi.onrender.com" || "http://localhost:5000",
 				changeOrigin: true,
 			},
 		},

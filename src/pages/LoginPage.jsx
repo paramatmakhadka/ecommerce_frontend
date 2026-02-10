@@ -63,15 +63,6 @@ export default function LoginPage() {
                     />
                 </div>
 
-                {/* Remember me (UI only) */}
-                <div className="mb-3 form-check">
-                    <input
-                        type="checkbox"
-                        className="form-check-input"
-                        id="rememberMe"
-                    />
-                </div>
-
                 {/* Submit */}
                 <button type="submit" className="btn btn-primary w-100">
                     Login

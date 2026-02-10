@@ -18,24 +18,15 @@ export default function ProductPage() {
             try {
                 setLoading(true)
 
-                // 1️⃣ Fetch single product
-                const { data } = await axios.get(
-                    `/api/products/${id}`
-                )
+                const { data } = await axios.get(`/api/products/${id}`)
                 setProduct(data)
                 setQty(1)
 
-                // 2️⃣ Fetch related products by category
                 const res = await axios.get(
-                    `/api/products?category=${encodeURIComponent(
-                        data.category
-                    )}`
+                    `/api/products?category=${encodeURIComponent(data.category)}`
                 )
 
-                setRelated(
-                    res.data.filter((p) => p._id !== data._id)
-                )
-
+                setRelated(res.data.filter(p => p._id !== data._id))
             } catch (err) {
                 console.error(err)
             } finally {
@@ -54,41 +45,32 @@ export default function ProductPage() {
         <div className="container my-5">
             <div className="row g-4">
 
-                {/* ===== MAIN PRODUCT ===== */}
+                {/* MAIN PRODUCT */}
                 <div className="col-lg-8">
-                    <div
-                        style={{
-                            border: '1px solid #e5e5e5',
-                            borderRadius: '12px',
-                            boxShadow: '0 10px 30px rgba(0,0,0,0.08)',
-                            padding: '2rem',
-                            background: '#fff'
-                        }}
-                    >
+                    <div className="card shadow-lg border rounded-4 p-4">
                         <h4 className="text-center mb-4">{product.name}</h4>
 
                         <div
-                            className="text-center mb-4"
+                            className="text-center mb-4 overflow-hidden rounded"
+                            role="button"
                             onClick={() => setShowModal(true)}
-                            style={{ cursor: 'pointer', overflow: 'hidden', borderRadius: '8px' }}
                         >
                             <img
-                                src={product.image?.startsWith('http') ? product.image : `${BASE_URL}${product.image}`}
+                                src={
+                                    product.image?.startsWith('http')
+                                        ? product.image
+                                        : `${BASE_URL}${product.image}`
+                                }
                                 alt={product.name}
-                                style={{
-                                    maxWidth: '100%',
-                                    maxHeight: '420px',
-                                    objectFit: 'contain',
-                                    transition: 'transform 0.3s ease',
-                                }}
-                                onMouseEnter={(e) => e.currentTarget.style.transform = 'scale(1.02)'}
-                                onMouseLeave={(e) => e.currentTarget.style.transform = 'scale(1)'}
+                                className="img-fluid"
+                                style={{ maxHeight: '420px', objectFit: 'contain' }}
                             />
-                            <p className="text-muted small mt-2"><i className="bi bi-zoom-in"></i> Click to enlarge</p>
+                            <p className="text-muted small mt-2">
+                                <i className="bi bi-zoom-in"></i> Click to enlarge
+                            </p>
                         </div>
 
                         <p className="fw-bold fs-5">Rs. {product.price}</p>
-
                         <p className="text-muted">{product.description}</p>
 
                         <div className="d-flex align-items-center gap-3 mb-3">
@@ -102,12 +84,14 @@ export default function ProductPage() {
                                     setQty(
                                         Math.max(
                                             1,
-                                            Math.min(product.countInStock, Number(e.target.value))
+                                            Math.min(
+                                                product.countInStock,
+                                                Number(e.target.value)
+                                            )
                                         )
                                     )
                                 }
-                                className="form-control"
-                                style={{ width: '90px' }}
+                                className="form-control w-auto"
                             />
                         </div>
 
@@ -121,7 +105,7 @@ export default function ProductPage() {
                     </div>
                 </div>
 
-                {/* ===== RELATED PRODUCTS ===== */}
+                {/* RELATED PRODUCTS */}
                 <div className="col-lg-4">
                     <h5 className="mb-3">Related Products</h5>
 
@@ -130,95 +114,67 @@ export default function ProductPage() {
                     )}
 
                     <div className="d-flex flex-column gap-3">
-                        {related.slice(0, 4).map((p) => (
+                        {related.slice(0, 4).map(p => (
                             <Link
                                 key={p._id}
                                 to={`/product/${p._id}`}
                                 className="text-decoration-none text-dark"
                             >
-                                <div
-                                    style={{
-                                        display: 'flex',
-                                        gap: '1rem',
-                                        border: '1px solid #eee',
-                                        borderRadius: '8px',
-                                        padding: '0.75rem',
-                                        background: '#fff',
-                                        boxShadow: '0 4px 12px rgba(0,0,0,0.06)',
-                                        transition: 'transform 0.2s ease'
-                                    }}
-                                >
-                                    <img
-                                        src={p.image?.startsWith('http') ? p.image : `${BASE_URL}${p.image}`}
-                                        alt={p.name}
-                                        style={{
-                                            width: '70px',
-                                            height: '70px',
-                                            objectFit: 'contain'
-                                        }}
-                                    />
-                                    <div>
-                                        <p className="small fw-semibold mb-1">{p.name}</p>
-                                        <p className="small text-muted mb-0">
-                                            Rs. {p.price}
-                                        </p>
+                                <div className="card shadow-sm border rounded-3 p-2">
+                                    <div className="d-flex gap-3 align-items-center">
+                                        <img
+                                            src={
+                                                p.image?.startsWith('http')
+                                                    ? p.image
+                                                    : `${BASE_URL}${p.image}`
+                                            }
+                                            alt={p.name}
+                                            className="img-fluid"
+                                            style={{
+                                                width: '70px',
+                                                height: '70px',
+                                                objectFit: 'contain'
+                                            }}
+                                        />
+                                        <div>
+                                            <p className="small fw-semibold mb-1">
+                                                {p.name}
+                                            </p>
+                                            <p className="small text-muted mb-0">
+                                                Rs. {p.price}
+                                            </p>
+                                        </div>
                                     </div>
                                 </div>
                             </Link>
                         ))}
                     </div>
                 </div>
-
             </div>
 
-            {/* ===== IMAGE MODAL ===== */}
+            {/* IMAGE MODAL */}
             {showModal && (
                 <div
+                    className="modal fade show d-flex align-items-center justify-content-center"
+                    style={{ backgroundColor: 'rgba(0,0,0,0.85)' }}
                     onClick={() => setShowModal(false)}
-                    style={{
-                        position: 'fixed',
-                        top: 0,
-                        left: 0,
-                        width: '100%',
-                        height: '100%',
-                        backgroundColor: 'rgba(0,0,0,0.85)',
-                        display: 'flex',
-                        alignItems: 'center',
-                        justifyContent: 'center',
-                        zIndex: 2000,
-                        cursor: 'zoom-out',
-                        padding: '20px',
-                        animation: 'fadeIn 0.3s ease'
-                    }}
                 >
-                    <style>{`
-                        @keyframes fadeIn {
-                            from { opacity: 0; }
-                            to { opacity: 1; }
-                        }
-                    `}</style>
-                    <img
-                        src={product.image?.startsWith('http') ? product.image : `${BASE_URL}${product.image}`}
-                        alt={product.name}
-                        style={{
-                            maxWidth: '90%',
-                            maxHeight: '90%',
-                            objectFit: 'contain',
-                            borderRadius: '8px',
-                            boxShadow: '0 0 30px rgba(0,0,0,0.5)',
-                            backgroundColor: '#fff'
-                        }}
-                    />
-                    <button
-                        onClick={() => setShowModal(false)}
-                        className="btn-close btn-close-white"
-                        style={{
-                            position: 'absolute',
-                            top: '20px',
-                            right: '20px',
-                            fontSize: '1.5rem'
-                        }}
-                    ></button>
+                    <div className="position-relative">
+                        <img
+                            src={
+                                product.image?.startsWith('http')
+                                    ? product.image
+                                    : `${BASE_URL}${product.image}`
+                            }
+                            alt={product.name}
+                            className="img-fluid rounded shadow bg-white"
+                            style={{ maxHeight: '90vh', maxWidth: '90vw' }}
+                        />
+                        <button
+                            className="btn-close btn-close-white position-absolute top-0 end-0 m-3"
+                            onClick={() => setShowModal(false)}
+                        ></button>
+                    </div>
                 </div>
             )}
         </div>
